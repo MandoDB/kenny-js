@@ -36,8 +36,11 @@ function kennyDie() {
 
 function someFunction(event) {
     const key = event.target.id;
-
+    var posX = document.getElementById('no-kenny-land').offsetLeft;
     var kenny = document.getElementById('kenny');
+    var viewportW = document.getElementById('viewport').offsetWidth,
+        viewportH = document.getElementById('viewport').offsetHeight
+    console.log(viewportH)
     switch (key) {
         case 'up':
             var t = parseInt(kenny.style.top);
@@ -47,26 +50,57 @@ function someFunction(event) {
             break;
         case 'down':
             var b = parseInt(kenny.style.top);
-            if (b >= 470) return
+            if (b >= (viewportH - 40)) return
             b = b + 10;
             kenny.style.top = b + 'px'
             break;
         case 'left':
             var l = parseInt(kenny.style.left);
-            if (l <= 60) {
-                kennyDie();
-                return;
+            if (posX == 0) {
+                if (l <= (posX + 50)) {
+                    kennyDie()
+                    return;
+                } else {
+                    l = l - 10;
+                    kenny.style.left = l + 'px'
+                }
+            } else {
+                if (l <= 0) return;
+                l = l - 10;
+                kenny.style.left = l + 'px'
             }
-            l = l - 10;
-            kenny.style.left = l + 'px'
+
             break;
         case 'right':
             var r = parseInt(kenny.style.left);
-            if (r >= 470) return
-            r = r + 10;
-            kenny.style.left = r + 'px'
+            if (posX != 0) {
+                if (r >= posX) {
+                    kennyDie()
+                    return;
+                } else {
+                    r = r + 10;
+                    kenny.style.left = r + 'px'
+                }
+            } else {
+                if (r >= (viewportW - 40)) return
+                r = r + 10;
+                kenny.style.left = r + 'px'
+            }
             break;
         default:
             return;
     }
+}
+
+document.getElementById("switch-side").addEventListener("click", switchSide);
+
+function switchSide() {
+    var noKennyLand = document.getElementById('no-kenny-land');
+        if (noKennyLand.style.marginLeft == "auto") {
+            noKennyLand.style.marginLeft = "0px";
+            noKennyLand.style.marginRight = "auto";
+        } else {
+            noKennyLand.style.marginRight = "0px";
+            noKennyLand.style.marginLeft = "auto";
+        }
 }
