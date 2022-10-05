@@ -95,6 +95,9 @@ function someFunction(event) {
 document.getElementById("switch-side").addEventListener("click", switchSide);
 
 function switchSide() {
+    var kenny = document.getElementById('kenny');
+    kenny.style.top = "200px";
+    kenny.style.left = "200px";
     var noKennyLand = document.getElementById('no-kenny-land');
         if (noKennyLand.style.marginLeft == "auto") {
             noKennyLand.style.marginLeft = "0px";
